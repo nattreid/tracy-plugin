@@ -1,6 +1,6 @@
 <?php
 
-namespace \NAtrreid\TracyPlugin;
+namespace \NAttreid\TracyPlugin;
 
 use Nette\DI\Container,
     Nextras\MailPanel\MailPanel,

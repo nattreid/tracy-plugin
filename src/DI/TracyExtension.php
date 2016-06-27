@@ -1,6 +1,6 @@
 <?php
 
-namespace \NAtrreid\TracyPlugin\DI;
+namespace \NAttreid\TracyPlugin\DI;
 
 /**
  * Nastaveni Tracy
@@ -28,7 +28,7 @@ class TracyExtension extends \Nette\DI\CompilerExtension {
         $config['path'] = \Nette\DI\Helpers::expand($config['path'], $this->getContainerBuilder()->parameters);
 
         $builder->addDefinition($this->prefix('tracyPlugin'))
-                ->setClass('NAtrreid\tracyPlugin\Tracy')
+                ->setClass('NAttreid\TracyPlugin\Tracy')
                 ->setArguments([$config['cookie'], $config['mailPath'], $config['mailPanel']])
                 ->addTag('run');
     }
