@@ -1,6 +1,6 @@
 <?php
 
-namespace \NAttreid\TracyPlugin\DI;
+namespace NAttreid\TracyPlugin\DI;
 
 /**
  * Nastaveni Tracy
