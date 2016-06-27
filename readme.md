@@ -3,7 +3,7 @@
 Nastavení v **config.neon**
 ```neon
 extensions:
-    tracyPlugin: NAtrreid\TracyPlugin\DI\TracyExtension
+    tracyPlugin: NAttreid\TracyPlugin\DI\TracyExtension
 ```
 
 dostupné nastavení
@@ -16,7 +16,7 @@ tracyPlugin:
 
 ## Nastavení v administraci
 ```php
-/** @var \NAtrreid\TracyPlugin\Tracy @inject */
+/** @var \NAttreid\TracyPlugin\Tracy @inject */
 public $tracy;
 
 $this->tracy->enable();
