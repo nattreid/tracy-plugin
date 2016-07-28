@@ -22,9 +22,9 @@ class TracyExtension extends \Nette\DI\CompilerExtension {
         $config = $this->validateConfig($this->defaults, $this->getConfig());
 
         if (!isset($config['cookie'])) {
-            throw new \Nette\InvalidStateException("Neni nastavena 'cookie' v config.neon pro TracyPlugin");
+            throw new \Nette\InvalidStateException("TracyPlugin: 'cookie' does not set in config.neon");
         } elseif (!isset($config['mailPanel'])) {
-            throw new \Nette\InvalidStateException("Neni nastaveno 'mailPanel' v config.neon pro TracyPlugin");
+            throw new \Nette\InvalidStateException("TracyPlugin: 'mailPanel' does not set in config.neon");
         }
 
         $config['mailPath'] = \Nette\DI\Helpers::expand($config['mailPath'], $this->getContainerBuilder()->parameters);
