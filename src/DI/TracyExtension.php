@@ -14,7 +14,7 @@ class TracyExtension extends \Nette\DI\CompilerExtension {
     private $defaults = [
         'cookie' => NULL,
         'mailPath' => '%tempDir%/mail-panel-mails',
-        'mailPanel' => NULL
+        'mailPanel' => TRUE
     ];
 
     public function loadConfiguration() {
@@ -23,16 +23,21 @@ class TracyExtension extends \Nette\DI\CompilerExtension {
 
         if (!isset($config['cookie'])) {
             throw new \Nette\InvalidStateException("TracyPlugin: 'cookie' does not set in config.neon");
-        } elseif (!isset($config['mailPanel'])) {
-            throw new \Nette\InvalidStateException("TracyPlugin: 'mailPanel' does not set in config.neon");
         }
 
         $config['mailPath'] = \Nette\DI\Helpers::expand($config['mailPath'], $builder->parameters);
 
         $builder->addDefinition($this->prefix('tracyPlugin'))
                 ->setClass(Tracy::class)
-                ->setArguments([$config['cookie'], $config['mailPath'], $config['mailPanel']])
-                ->addTag('run');
+                ->setArguments([$config['cookie']])
+                ->addSetup('setMail', [ $config['mailPath'], $config['mailPanel']]);
+    }
+
+    public function afterCompile(\Nette\PhpGenerator\ClassType $class) {
+        $initialize = $class->methods['initialize'];
+        if (class_exists('Tracy\Debugger')) {
+            $initialize->addBody('$this->getService(?)->run();', [$this->prefix('tracyPlugin')]);
+        }
     }
 
 }

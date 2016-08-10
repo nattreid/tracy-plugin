@@ -10,7 +10,7 @@ dostupné nastavení
 ```neon
 tracyPlugin:
     cookie: tz6h8dh6dt7
-    mailPanel: @configuration::mailPanel
+    mailPanel: true
     mailPath: %tempDir%/mail-panel-mails
 ```
 

@@ -40,19 +40,31 @@ class Tracy {
     /** @var boolean */
     private $enable;
 
-    public function __construct($cookie, $mailPath, $mailPanel, Container $container, Request $request, Response $response) {
+    public function __construct($cookie, Container $container, Request $request, Response $response) {
         $this->cookie = $cookie;
-        $this->mailPath = $mailPath;
-        $this->mailPanel = $mailPanel;
         $this->container = $container;
         $this->request = $request;
         $this->response = $response;
 
         $this->enable = $this->request->getCookie(Configurator::COOKIE_SECRET) !== NULL;
+    }
 
-        if (!Debugger::$productionMode) {
-            $this->mailer();
-        }
+    /**
+     * Nastavi mail panel
+     * @param string $mailPath
+     * @param boolean $mailPanel
+     */
+    public function setMail($mailPath, $mailPanel) {
+        $this->mailPath = $mailPath;
+        $this->mailPanel = $mailPanel;
+    }
+
+    /**
+     * Zapne nebo vypne mail panel
+     * @param boolean $enable
+     */
+    public function enableMail($enable = TRUE) {
+        $this->mailPanel = $enable;
     }
 
     /**
@@ -91,7 +103,13 @@ class Tracy {
             $this->container->addService($service, $mailer);
 
             $this->container->getService('tracy.bar')
-                    ->addPanel(new MailPanel($this->mailPath, $this->container->getService('http.request'), $this->container->getService('mail.mailer')));
+                    ->addPanel(new MailPanel($this->mailPath, $this->request, $this->container->getService($service)));
+        }
+    }
+
+    public function run() {
+        if (!Debugger::$productionMode) {
+            $this->mailer();
         }
     }
 
