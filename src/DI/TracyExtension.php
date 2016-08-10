@@ -27,8 +27,6 @@ class TracyExtension extends \Nette\DI\CompilerExtension {
             throw new \Nette\InvalidStateException("TracyPlugin: 'mailPanel' does not set in config.neon");
         }
 
-        $config['mailPath'] = \Nette\DI\Helpers::expand($config['mailPath'], $builder->parameters);
-
         $builder->addDefinition($this->prefix('tracyPlugin'))
                 ->setClass(Tracy::class)
                 ->setArguments([$config['cookie'], $config['mailPath'], $config['mailPanel']])
