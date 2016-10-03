@@ -48,7 +48,7 @@ class Tracy
 		$this->request = $request;
 		$this->response = $response;
 
-		$this->enable = $this->request->getCookie(Configurator::COOKIE_SECRET) !== NULL;
+		$this->enable = $this->request->getCookie(Configurator::COOKIE_SECRET) !== null;
 	}
 
 	/**
@@ -66,7 +66,7 @@ class Tracy
 	 * Zapne nebo vypne mail panel
 	 * @param boolean $enable
 	 */
-	public function enableMail($enable = TRUE)
+	public function enableMail($enable = true)
 	{
 		$this->mailPanel = $enable;
 	}
@@ -85,8 +85,8 @@ class Tracy
 	 */
 	public function enable()
 	{
-		$this->response->setCookie(Configurator::COOKIE_SECRET, $this->cookie, strtotime('1 years'), '/', '', '', TRUE);
-		$this->enable = TRUE;
+		$this->response->setCookie(Configurator::COOKIE_SECRET, $this->cookie, strtotime('1 years'), '/', '', '', true);
+		$this->enable = true;
 	}
 
 	/**
@@ -95,7 +95,7 @@ class Tracy
 	public function disable()
 	{
 		$this->response->deleteCookie(Configurator::COOKIE_SECRET);
-		$this->enable = FALSE;
+		$this->enable = false;
 	}
 
 	/**

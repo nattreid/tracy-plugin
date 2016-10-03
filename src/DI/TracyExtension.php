@@ -13,9 +13,9 @@ class TracyExtension extends \Nette\DI\CompilerExtension
 {
 
 	private $defaults = [
-		'cookie' => NULL,
+		'cookie' => null,
 		'mailPath' => '%tempDir%/mail-panel-mails',
-		'mailPanel' => TRUE
+		'mailPanel' => true
 	];
 
 	public function loadConfiguration()
