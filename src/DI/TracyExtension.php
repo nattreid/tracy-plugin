@@ -23,7 +23,7 @@ class TracyExtension extends \Nette\DI\CompilerExtension
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->defaults, $this->getConfig());
 
-		if (!isset($config['cookie'])) {
+		if ($config['cookie'] === null) {
 			throw new \Nette\InvalidStateException("TracyPlugin: 'cookie' does not set in config.neon");
 		}
 
