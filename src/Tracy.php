@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\TracyPlugin;
 
 use Nette\Configurator;
@@ -26,7 +28,7 @@ class Tracy
 	/** @var string */
 	private $mailPath;
 
-	/** @var boolean */
+	/** @var bool */
 	private $mailPanel;
 
 	/** @var Container */
@@ -38,10 +40,10 @@ class Tracy
 	/** @var Response */
 	private $response;
 
-	/** @var boolean */
+	/** @var bool */
 	private $enable;
 
-	public function __construct($cookie, Container $container, Request $request, Response $response)
+	public function __construct(string $cookie, Container $container, Request $request, Response $response)
 	{
 		$this->cookie = $cookie;
 		$this->container = $container;
@@ -54,9 +56,9 @@ class Tracy
 	/**
 	 * Nastavi mail panel
 	 * @param string $mailPath
-	 * @param boolean $mailPanel
+	 * @param bool $mailPanel
 	 */
-	public function setMail($mailPath, $mailPanel)
+	public function setMail(string $mailPath, bool $mailPanel)
 	{
 		$this->mailPath = $mailPath;
 		$this->mailPanel = $mailPanel;
@@ -64,18 +66,18 @@ class Tracy
 
 	/**
 	 * Zapne nebo vypne mail panel
-	 * @param boolean $enable
+	 * @param bool $enable
 	 */
-	public function enableMail($enable = true)
+	public function enableMail(bool $enable = true)
 	{
 		$this->mailPanel = $enable;
 	}
 
 	/**
 	 * Je debugger zapnuty (pomoci cookie)
-	 * @return boolean
+	 * @return bool
 	 */
-	public function isEnabled()
+	public function isEnabled(): bool
 	{
 		return $this->enable;
 	}
