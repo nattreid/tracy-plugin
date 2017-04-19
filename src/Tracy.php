@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace NAttreid\TracyPlugin;
 
@@ -8,6 +8,7 @@ use Nette\Configurator;
 use Nette\DI\Container;
 use Nette\Http\Request;
 use Nette\Http\Response;
+use Nette\SmartObject;
 use Nextras\MailPanel\FileMailer;
 use Nextras\MailPanel\MailPanel;
 use Tracy\Debugger;
@@ -19,8 +20,7 @@ use Tracy\Debugger;
  */
 class Tracy
 {
-
-	use \Nette\SmartObject;
+	use SmartObject;
 
 	/** @var string */
 	private $cookie;
@@ -58,7 +58,7 @@ class Tracy
 	 * @param string $mailPath
 	 * @param bool $mailPanel
 	 */
-	public function setMail(string $mailPath, bool $mailPanel)
+	public function setMail(string $mailPath, bool $mailPanel): void
 	{
 		$this->mailPath = $mailPath;
 		$this->mailPanel = $mailPanel;
@@ -68,7 +68,7 @@ class Tracy
 	 * Zapne nebo vypne mail panel
 	 * @param bool $enable
 	 */
-	public function enableMail(bool $enable = true)
+	public function enableMail(bool $enable = true): void
 	{
 		$this->mailPanel = $enable;
 	}
@@ -85,7 +85,7 @@ class Tracy
 	/**
 	 * Zapnuti debug modu pomoci cookie
 	 */
-	public function enable()
+	public function enable(): void
 	{
 		$this->response->setCookie(Configurator::COOKIE_SECRET, $this->cookie, strtotime('1 years'), '/', '', '', true);
 		$this->enable = true;
@@ -94,7 +94,7 @@ class Tracy
 	/**
 	 * Vypnuti debug modu pomoci cookie
 	 */
-	public function disable()
+	public function disable(): void
 	{
 		$this->response->deleteCookie(Configurator::COOKIE_SECRET);
 		$this->enable = false;
@@ -103,7 +103,7 @@ class Tracy
 	/**
 	 * Mail panel
 	 */
-	private function mailer()
+	private function mailer(): void
 	{
 		if ($this->mailPanel) {
 			$mailer = new FileMailer($this->mailPath);
@@ -117,7 +117,7 @@ class Tracy
 		}
 	}
 
-	public function run()
+	public function run(): void
 	{
 		if (!Debugger::$productionMode) {
 			$this->mailer();

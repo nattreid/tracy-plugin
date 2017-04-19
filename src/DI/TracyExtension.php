@@ -1,17 +1,21 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace NAttreid\TracyPlugin\DI;
 
 use NAttreid\TracyPlugin\Tracy;
+use Nette\DI\CompilerExtension;
+use Nette\DI\Helpers;
+use Nette\InvalidStateException;
+use Nette\PhpGenerator\ClassType;
 
 /**
  * Nastaveni Tracy
  *
  * @author Attreid <attreid@gmail.com>
  */
-class TracyExtension extends \Nette\DI\CompilerExtension
+class TracyExtension extends CompilerExtension
 {
 
 	private $defaults = [
@@ -20,16 +24,16 @@ class TracyExtension extends \Nette\DI\CompilerExtension
 		'mailPanel' => true
 	];
 
-	public function loadConfiguration()
+	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->defaults, $this->getConfig());
 
 		if ($config['cookie'] === null) {
-			throw new \Nette\InvalidStateException("TracyPlugin: 'cookie' does not set in config.neon");
+			throw new InvalidStateException("TracyPlugin: 'cookie' does not set in config.neon");
 		}
 
-		$config['mailPath'] = \Nette\DI\Helpers::expand($config['mailPath'], $builder->parameters);
+		$config['mailPath'] = Helpers::expand($config['mailPath'], $builder->parameters);
 
 		$builder->addDefinition($this->prefix('tracyPlugin'))
 			->setClass(Tracy::class)
@@ -37,7 +41,7 @@ class TracyExtension extends \Nette\DI\CompilerExtension
 			->addSetup('setMail', [$config['mailPath'], $config['mailPanel']]);
 	}
 
-	public function afterCompile(\Nette\PhpGenerator\ClassType $class)
+	public function afterCompile(ClassType $class): void
 	{
 		$initialize = $class->methods['initialize'];
 		if (class_exists('Tracy\Debugger')) {
