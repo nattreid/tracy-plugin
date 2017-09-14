@@ -36,7 +36,7 @@ class TracyExtension extends CompilerExtension
 		$config['mailPath'] = Helpers::expand($config['mailPath'], $builder->parameters);
 
 		$builder->addDefinition($this->prefix('tracyPlugin'))
-			->setClass(Tracy::class)
+			->setType(Tracy::class)
 			->setArguments([$config['cookie']])
 			->addSetup('setMail', [$config['mailPath'], $config['mailPanel']]);
 	}
